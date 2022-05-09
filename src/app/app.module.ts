@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { GraphQLModule } from './graphql.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -18,8 +19,14 @@ import { GraphQLModule } from './graphql.module';
     RouterModule.forRoot([]),
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     GraphQLModule,
     MaterialModule,
+    ToastrModule.forRoot({
+      timeOut: 2500,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false
+    }),
     HttpClientModule
   ],
   providers: [],

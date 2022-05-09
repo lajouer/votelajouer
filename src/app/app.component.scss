@@ -14,12 +14,16 @@ p {
     padding-top: 0px;
     padding-left: 0px;
   }
+
+// .mat-card > * {
+//   margin-top:5px;
+// }  
   
 tr.mat-row,
 tr.mat-header-row {
   height: 20px;
 }
-td .mat-form-field {
+.mat-form-field {
   height: 20px;
 }
 
@@ -52,4 +56,7 @@ td.mat-footer-cell:last-of-type {
 // Add in style.scss as we are overriding css of global mat-select class which is part of other module.
 ::ng-deep.mat-form-field .mat-select-disabled .mat-select-value {
     color: black;
+}
+::ng-deep .mat-select.mat-select-disabled .mat-select-arrow {
+    display: none;
 }
