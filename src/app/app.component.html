@@ -6,7 +6,7 @@
         <input matInput [(ngModel)]="mail" required />
       </mat-form-field>
       <button mat-flat-button color="primary" (click)="getData()" style="margin-bottom: 20px;"
-        *ngIf="mail">申込データ取得</button>
+        [disabled]="!mail">申込データ取得</button>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="form">

@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   displayedColumns = [
     'waku',
     'riki',
-    'riki2',
     'c01',
     'c02',
     'c03',
@@ -36,6 +35,7 @@ export class AppComponent implements OnInit {
     'c13',
     'c14',
     'c15',
+    'riki2'
   ];
   dataSource2 = new MatTableDataSource();
   displayedColumns2 = [
