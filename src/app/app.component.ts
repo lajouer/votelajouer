@@ -42,21 +42,21 @@ export class AppComponent implements OnInit {
     'wposi',
     'wname',
     'wmove',
-    'w1',
-    'w2',
-    'w3',
-    'w4',
-    'w5',
     'w6',
+    'w5',
+    'w4',
+    'w3',
+    'w2',
+    'w1',
     'eposi',
     'ename',
     'emove',
-    'e1',
-    'e2',
-    'e3',
-    'e4',
+    'e6',
     'e5',
-    'e6'
+    'e4',
+    'e3',
+    'e2',
+    'e1'
   ];
 
   constructor(public qrysrv: QueryService,
@@ -90,35 +90,26 @@ export class AppComponent implements OnInit {
     )
 
     this.qrysrv.observe.subscribe(number => {
-      // this.qrysrv.cur = number;
       this.form = this.qrysrv.frmCur;
-      // console.log(number, this.form);
       this.dataSource.data = this.qrysrv.frmArr.controls;
       this.dataSource2.data = this.qrysrv.list;
       this.cdRef.detectChanges();
     });
-    // console.log(this.qrysrv.getCurForm(this.qrysrv.cur));
+
   }
   getData() {
     this.qrysrv.qryMonth(this.mail);
-    // this.dataSource.data = this.qrysrv.votes[0].tbls;
-    // console.log(this.dataSource.data);
-    // this.cdRef.detectChanges();
+
   }
-  // refresh(vote) {
-  //   this.dataSource.data = vote.tbls;
-  //   this.qrysrv.vote = vote;
-  //   // this.form.get('name').setValue(vote.name);
-  //   // console.log(this.dataSource.data);
-  // }
-  setPrev() {
-    this.qrysrv.cur -= 1;
-    this.qrysrv.subject.next(this.qrysrv.cur);
+
+  setPrev() { //前へ
+    this.qrysrv.cur -= 1;  //現在番号をカウントダウン
+    this.qrysrv.subject.next(this.qrysrv.cur);  //画面を更新
   }
-  setNext() {
-    this.qrysrv.updTran();
-    this.qrysrv.cur += 1;
-    this.qrysrv.subject.next(this.qrysrv.cur);
+  setNext() { //次へ
+    this.qrysrv.updTran(); //保存する
+    this.qrysrv.cur += 1;  //現在番号をカウントアップ
+    this.qrysrv.subject.next(this.qrysrv.cur); //画面を更新
   }
   makeSelVal(): Sval[] {
 

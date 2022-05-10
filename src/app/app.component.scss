@@ -1,6 +1,7 @@
 p {
     font-family: 'Courier New', Courier, monospace;
   }
+  
 .mat-cell,
 .mat-footer-cell,
 .mat-header-cell {
@@ -24,43 +25,39 @@ tr.mat-header-row {
   height: 20px;
 }
 .mat-form-field {
-  height: 20px;
-}
-.mat-form-field-outline {
-  padding-top: 5px !important;
-  padding-bottom: 5px !important;
+  height: 15px;
 }
 
 th.mat-header-cell:first-of-type,
 td.mat-cell:first-of-type,
 td.mat-footer-cell:first-of-type {
-  padding-left: 0px;
-  border-left: 0.5px solid grey;
+  padding-left: 1px;
+  // border-left: 0.5px solid grey;
 }
 
 th.mat-header-cell:last-of-type,
 td.mat-cell:last-of-type,
 td.mat-footer-cell:last-of-type {
-  padding-right: 0px;
+  padding-right: 1px;
 }
-
+// inputの下線を非表示に
 ::ng-deep .mat-form-field-underline{
    display: none;
   }
-
 ::ng-deep td .mat-form-field-infix {
     border: none;
 }
+// disabledも色が薄くならないように
 ::ng-deep.mat-form-field input:disabled {
     color: black;
 }
 ::ng-deep.mat-form-field select:disabled {
     color: black;
 }
-// Add in style.scss as we are overriding css of global mat-select class which is part of other module.
 ::ng-deep.mat-form-field .mat-select-disabled .mat-select-value {
     color: black;
 }
+// mat-select disabled の▼を非表示に
 ::ng-deep .mat-select.mat-select-disabled .mat-select-arrow {
     display: none;
 }
