@@ -12,17 +12,26 @@ p {
 .mat-table {
     overflow-x: scroll;
     display: table;
-    padding-top: 0px;
+    margin: 5px;
     padding-left: 0px;
   }
 
-// .mat-card > * {
-//   margin-top:5px;
-// }  
+.mat-card > * {
+  margin-top:5px;
+}  
   
 tr.mat-row,
-tr.mat-header-row {
+tr.mat-header-row  {
   height: 20px;
+}
+.mat-header-row {
+  background: #005173;
+}
+.mat-header-cell {
+  color: white;
+}
+p {
+  color:red;
 }
 .mat-form-field {
   height: 15px;

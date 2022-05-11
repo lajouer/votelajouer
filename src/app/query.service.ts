@@ -92,7 +92,7 @@ export class QueryService {
     query get_month($mail: String!) {
       msmonth(order_by: {month: desc_nulls_last}, offset: 0, limit: 1) {
         month
-        trvotes(where: {mail: {_eq: $mail}}) {
+        trvotes(where: {mail: {_eq: $mail}},order_by: {customerid: asc_nulls_last}) {
           month
           orderid
           customerid

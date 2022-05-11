@@ -107,7 +107,10 @@ export class AppComponent implements OnInit {
     this.qrysrv.subject.next(this.qrysrv.cur);  //画面を更新
   }
   setNext() { //次へ
-    this.qrysrv.updTran(); //保存する
+    // console.log(this.form.dirty);
+    if (this.form.dirty) {
+      this.qrysrv.updTran(); //変更があった場合だけ、保存する
+    }
     this.qrysrv.cur += 1;  //現在番号をカウントアップ
     this.qrysrv.subject.next(this.qrysrv.cur); //画面を更新
   }
