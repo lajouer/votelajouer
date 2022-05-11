@@ -1,5 +1,7 @@
 p {
     font-family: 'Courier New', Courier, monospace;
+    color:red;
+    font-weight:bold;
   }
   
 .mat-cell,
@@ -14,12 +16,16 @@ p {
     display: table;
     margin: 5px;
     padding-left: 0px;
+    width: 100%;
   }
 
 .mat-card > * {
-  margin-top:5px;
+  margin-top: 5px;
 }  
-  
+// div.mat-card-header-text {
+//   display: none;
+// }
+
 tr.mat-row,
 tr.mat-header-row  {
   height: 20px;
@@ -30,9 +36,7 @@ tr.mat-header-row  {
 .mat-header-cell {
   color: white;
 }
-p {
-  color:red;
-}
+
 .mat-form-field {
   height: 15px;
 }

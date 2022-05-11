@@ -114,8 +114,7 @@ export class AppComponent implements OnInit {
     this.qrysrv.cur += 1;  //現在番号をカウントアップ
     this.qrysrv.subject.next(this.qrysrv.cur); //画面を更新
   }
-  makeSelVal(): Sval[] {
-
+  makeSelVal(j: number): Sval[] {
     let ret: Sval[] = [];
 
     let tmp = [];
@@ -124,15 +123,11 @@ export class AppComponent implements OnInit {
       if (e.getRawValue().riki) {
         tmp.push({ riki: e.getRawValue().riki });
         let i: number = this.qrysrv.yoko.findIndex((obj: any) => obj.sval == e.getRawValue().riki);
-        if (i > -1) {
+        if (i > -1 && e.getRawValue().riki != this.qrysrv.frmArr.getRawValue()[j].riki) {
           yflg = true;
         }
       }
-      // console.log(e.getRawValue().riki, this.dataSource.data);
 
-    });
-    this.qrysrv.init.forEach((e: any) => {
-      ret.push(e);
     });
     this.qrysrv.yoko.forEach((e: any) => {
       e.dis = yflg;
@@ -143,7 +138,7 @@ export class AppComponent implements OnInit {
       let i: number = tmp.findIndex(
         (obj: any) => obj.riki == e.sval
       );
-      if (i > -1) {
+      if (i > -1 && e.sval != this.qrysrv.frmArr.getRawValue()[j].riki) {
         e.dis = true;
       } else {
         e.dis = false;

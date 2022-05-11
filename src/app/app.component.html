@@ -1,15 +1,15 @@
 <mat-card>
-  <mat-card-header style="margin-bottom: 0px;">
-    <mat-form-field appearance="outline">
-      <mat-label>メールアドレス</mat-label>
-      <input matInput [(ngModel)]="mail" required />
-    </mat-form-field>
-    <button mat-flat-button color="primary" (click)="getData()" style="margin: 10px;" [disabled]="!mail">読込</button>
-  </mat-card-header>
+  <!-- <mat-card-header style="margin-bottom: 0px;"> -->
+  <mat-form-field appearance="outline">
+    <mat-label>メールアドレス</mat-label>
+    <input matInput [(ngModel)]="mail" required />
+  </mat-form-field>
+  <button mat-flat-button color="primary" (click)="getData()" style="margin: 10px;" [disabled]="!mail">読込</button>
+  <!-- </mat-card-header> -->
   <mat-card-content>
     <form [formGroup]="form">
-      <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
-        <ng-container>
+      <div fxLayout="row wrap" fxLayoutGap="5px">
+        <div>
           <mat-form-field style="width: 6em;">
             <mat-label>販社コード</mat-label>
             <input matInput [value]="form.getRawValue().comp" disabled />
@@ -22,8 +22,8 @@
             <mat-label>シコ名</mat-label>
             <input matInput formControlName="name" maxlength="5" required />
           </mat-form-field>
-        </ng-container>
-        <ng-container>
+        </div>
+        <div>
           <button mat-flat-button color="warn" (click)="setPrev()" style="margin: 10px;"
             *ngIf="qrysrv.cur > 1">前へ</button>
           <span> {{qrysrv.cur}} 口目 ／ {{qrysrv.cnt}} 口　</span>
@@ -31,7 +31,7 @@
             *ngIf="qrysrv.cur < qrysrv.cnt" [disabled]="form.invalid">次へ(保存)</button>
           <button mat-flat-button color="accent" (click)="qrysrv.updTran()" style="margin: 10px;"
             *ngIf="qrysrv.cnt > 0 && qrysrv.cur == qrysrv.cnt" [disabled]="form.invalid">保存</button>
-        </ng-container>
+        </div>
         <p *ngIf="form.invalid">シコ名を入力し(5文字以内)、00(控)まで力士を選択して下さい！！</p>
       </div>
       <table mat-table formArrayName="mtbl" [dataSource]="dataSource" aria-label="Elements" class="mat-elevation-z8">
@@ -46,9 +46,9 @@
         <ng-container matColumnDef="riki">
           <th mat-header-cell *matHeaderCellDef>力士選択</th>
           <td mat-cell *matCellDef="let row; let i = index" [formGroupName]="i">
-            <mat-form-field style="width: 9em;">
+            <mat-form-field style="width: 7em;">
               <mat-select formControlName="riki" required>
-                <mat-option *ngFor="let sval of makeSelVal()" [value]="sval.sval" [disabled]="sval.dis">
+                <mat-option *ngFor="let sval of makeSelVal(i)" [value]="sval.sval" [disabled]="sval.dis">
                   {{ sval.viewval }}
                 </mat-option>
               </mat-select>
@@ -58,7 +58,7 @@
         <ng-container matColumnDef="riki2">
           <th mat-header-cell *matHeaderCellDef>確定内容</th>
           <td mat-cell *matCellDef="let row; let i = index" [formGroupName]="i">
-            <mat-form-field style="width: 9em;">
+            <mat-form-field style="width: 6em;">
               <mat-select [value]="qrysrv.frmArr.getRawValue()[i].riki2" disabled>
                 <mat-option *ngFor="let sval of qrysrv.riki.concat(qrysrv.yoko)" [value]="sval.sval">
                   {{ sval.viewval }}

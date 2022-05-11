@@ -4,11 +4,13 @@ import { Subject, Observable } from 'rxjs';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
 import { ToastrService } from 'ngx-toastr';
+
 export class Sval {
   sval: string;
   viewval: string;
   dis: boolean;
 }
+
 export class TblDt {
   waku: string;
   riki: string;
@@ -29,6 +31,7 @@ export class TblDt {
   c14: string;
   c15: string;
 }
+
 export class List {
   wname: string;
   wmove: string;
@@ -53,31 +56,18 @@ export class List {
     Object.assign(this, init);
   }
 }
-// export class Vote {
-//   comp: string;
-//   cust: string;
-//   name: string;
-//   tbls: TblDt[];
-//   constructor(init?: Partial<Vote>) {
-//     Object.assign(this, init);
-//   }
-// }
 
 @Injectable({
   providedIn: 'root'
 })
 export class QueryService {
   public month: string = "";
-  public init: Sval[] = [{ sval: null, viewval: '', dis: false }];
   public yoko: Sval[] = [];
-  // zeki: Sval[];
   public riki: Sval[] = [];
   public list: List[] = [];
   public waku = [];
   public tblDt = [];
   public forms: FormArray = this.fb.array([]);
-  // public votes: Vote[] = [];
-  // public vote = new Vote();
   public cnt: number = 0;
   public cur: number = 0;
   public buy: string = "";
@@ -143,7 +133,6 @@ export class QueryService {
           for (let j = 10; j > -1; j--) {
             const waku: string = ('00' + j).slice(-2);
             let row = this.waku.filter(e => e.waku == waku);
-            // console.log(row);
             rows.push(this.createRow(row[0], trvote['riki' + waku + 'i'], trvote['riki' + waku + 'c']));
           }
           let form = this.fb.group({
@@ -152,25 +141,15 @@ export class QueryService {
             name: new FormControl(trvote.name),
             mtbl: rows
           });
-          // console.log(rows);
           this.forms.push(form);
-          // let lcvote: Vote = {
-          //   comp: tmp.slice(0, 4),
-          //   cust: tmp.slice(-4),
-          //   name: "",
-          //   tbls: this.setTbl(data.msmonth[0].trvotes[i])
-          // };
-          // this.votes.push(lcvote);
         }
         this.cur = 1;
         this.subject.next(this.cur);
-        // console.log(this.votes);
       }, (error) => {
         console.log('error get_month', error);
       });
   }
   createRow(row, riki, riki2) {
-    // console.log(row, row.waku);
     return this.fb.group({
       waku: new FormControl({ value: row.waku, disabled: true }),
       riki: new FormControl(riki, Validators.required),
@@ -193,16 +172,6 @@ export class QueryService {
     });
   }
 
-  // setTbl(trvote) {
-  //   let tbl = [];
-  //   for (let i = 10; i > -1; i--) {
-  //     const waku: string = ('00' + i).slice(-2);
-  //     let row = this.waku.filter(e => e.waku == waku);
-  //     tbl.push({ ...row[0], riki: trvote['riki' + waku + 'i'], riki2: trvote['riki' + waku + 'c'] });
-  //   }
-  //   // console.log(tbl);
-  //   return tbl;
-  // }
   qryRikishi(): void {
     const GetMast = gql`
     query get_rikishi {
@@ -231,7 +200,6 @@ export class QueryService {
       .valueChanges
       .subscribe(({ data }) => {
         let row1: List = new List();
-        let row2: List = new List();
         for (let i = 0; i < data.msrikishi.length; i++) {
           const row = data.msrikishi[i];
           if (row.posi == '横綱' || row.posi == '大関') {
@@ -241,9 +209,7 @@ export class QueryService {
           }
           if (row.riki % 2 == 1) {
             this.list.push(row1);
-            // this.list.push(row2);
             row1 = new List();
-            // row2 = new List();
             row1.wname = row.name;
             row1.wmove = row.move;
             row1.wposi = row.posi;
@@ -267,8 +233,6 @@ export class QueryService {
         }
         this.list.push(row1);
         this.list.shift();
-        // this.list.push(row2);
-        // console.log(this.yoko, this.riki);
       }, (error) => {
         console.log('error get_rikishi', error);
       });
