@@ -1,5 +1,6 @@
 <mat-card>
   <!-- <mat-card-header style="margin-bottom: 0px;"> -->
+  入力締切日：{{qrysrv.end| date:"yyyy/MM/dd"}}　<p *ngIf="qrysrv.flg">　を過ぎているため、変更はできません！！</p>
   <mat-form-field appearance="outline">
     <mat-label>メールアドレス</mat-label>
     <input matInput [(ngModel)]="mail" required />
@@ -28,7 +29,7 @@
             *ngIf="qrysrv.cur > 1">前へ</button>
           <span> {{qrysrv.cur}} 口目 ／ {{qrysrv.cnt}} 口　</span>
           <button mat-flat-button color="accent" (click)="setNext()" style="margin: 10px;"
-            *ngIf="qrysrv.cur < qrysrv.cnt" [disabled]="form.invalid">次へ(保存)</button>
+            *ngIf="qrysrv.cur < qrysrv.cnt" [disabled]="form.invalid">次へ<span *ngIf="!qrysrv.flg">(保存)</span></button>
           <button mat-flat-button color="accent" (click)="qrysrv.updTran()" style="margin: 10px;"
             *ngIf="qrysrv.cnt > 0 && qrysrv.cur == qrysrv.cnt" [disabled]="form.invalid">保存</button>
         </div>

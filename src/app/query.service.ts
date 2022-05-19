@@ -62,6 +62,8 @@ export class List {
 })
 export class QueryService {
   public month: string = "";
+  public end: Date;
+  public flg: boolean;
   public yoko: Sval[] = [];
   public riki: Sval[] = [];
   public list: List[] = [];
@@ -82,6 +84,7 @@ export class QueryService {
     query get_month($mail: String!) {
       msmonth(order_by: {month: desc_nulls_last}, offset: 0, limit: 1) {
         month
+        end
         trvotes(where: {mail: {_eq: $mail}},order_by: {customerid: asc_nulls_last}) {
           month
           orderid
@@ -123,8 +126,11 @@ export class QueryService {
     })
       .valueChanges
       .subscribe(({ data }) => {
-
         this.month = data.msmonth[0].month;
+        this.end = new Date(data.msmonth[0].end);
+        this.flg = this.checkDate(this.end);
+        // console.log(this.end > new Date(), this.end < new Date());
+
         this.cnt = data.msmonth[0].trvotes.length;
         for (let i = 0; i < this.cnt; i++) {
           const trvote = data.msmonth[0].trvotes[i];
@@ -138,7 +144,7 @@ export class QueryService {
           let form = this.fb.group({
             comp: new FormControl({ value: tmp.slice(0, 4), disabled: true }),
             cust: new FormControl({ value: tmp.slice(-4), disabled: true }),
-            name: new FormControl(trvote.name),
+            name: new FormControl({ value: trvote.name, disabled: this.flg }),
             mtbl: rows
           });
           this.forms.push(form);
@@ -152,7 +158,7 @@ export class QueryService {
   createRow(row, riki, riki2) {
     return this.fb.group({
       waku: new FormControl({ value: row.waku, disabled: true }),
-      riki: new FormControl(riki, Validators.required),
+      riki: new FormControl({ value: riki, disabled: this.flg }, Validators.required),
       riki2: new FormControl({ value: riki2, disabled: true }),
       c01: new FormControl({ value: row.c01, disabled: true }),
       c02: new FormControl({ value: row.c02, disabled: true }),
@@ -306,4 +312,18 @@ export class QueryService {
     });
     // console.log(this.getCurForm(this.cur - 1));
   }
+
+  checkDate(sDate): boolean { //true⇒入力不可
+    let flg: boolean = false;
+    const nDate: Date = new Date();
+    if (nDate.getFullYear() > sDate.getFullYear()) {
+      flg = true;
+    } else if (nDate.getMonth() > sDate.getMonth()) {
+      flg = true;
+    } else if (nDate.getDate() > sDate.getDate()) {
+      flg = true;
+    }
+    return flg;
+  }
+
 }

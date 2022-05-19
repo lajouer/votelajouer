@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
   }
   getData() {
     this.qrysrv.qryMonth(this.mail);
-
+    // console.log(this.qrysrv.end, new Date());
   }
 
   setPrev() { //前へ
