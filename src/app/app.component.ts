@@ -39,15 +39,6 @@ export class AppComponent implements OnInit {
   ];
   dataSource2 = new MatTableDataSource();
   displayedColumns2 = [
-    'wposi',
-    'wname',
-    'wmove',
-    'w6',
-    'w5',
-    'w4',
-    'w3',
-    'w2',
-    'w1',
     'eposi',
     'ename',
     'emove',
@@ -56,7 +47,16 @@ export class AppComponent implements OnInit {
     'e4',
     'e3',
     'e2',
-    'e1'
+    'e1',
+    'wposi',
+    'wname',
+    'wmove',
+    'w6',
+    'w5',
+    'w4',
+    'w3',
+    'w2',
+    'w1'
   ];
 
   constructor(public qrysrv: QueryService,
@@ -97,6 +97,13 @@ export class AppComponent implements OnInit {
     });
 
   }
+
+  updKana(value: string) {
+    let val = this.qrysrv.convKana(value);
+    // console.log(value,val);
+    this.form.get('name').setValue(val);
+  }
+
   getData() {
     this.qrysrv.qryMonth(this.mail);
     // console.log(this.qrysrv.end, new Date());

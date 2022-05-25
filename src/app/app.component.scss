@@ -8,9 +8,11 @@ p {
 .mat-footer-cell,
 .mat-header-cell {
     padding: 2px;
-    border-right: 0.5px solid grey;
+    border-right: 0.5px solid grey;    
+    text-align: center;
+    justify-content:center;
   }
-  
+
 .mat-table {
     overflow-x: scroll;
     display: table;

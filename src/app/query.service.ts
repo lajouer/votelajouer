@@ -209,23 +209,13 @@ export class QueryService {
         for (let i = 0; i < data.msrikishi.length; i++) {
           const row = data.msrikishi[i];
           if (row.posi == '横綱' || row.posi == '大関') {
-            this.yoko.push({ sval: row.riki, viewval: row.posi + row.name, dis: false });
+            this.yoko.push({ sval: row.riki, viewval: row.riki + row.posi + row.name, dis: false });
           } else {
-            this.riki.push({ sval: row.riki, viewval: row.name, dis: false });
+            this.riki.push({ sval: row.riki, viewval: row.riki + row.name, dis: false });
           }
           if (row.riki % 2 == 1) {
             this.list.push(row1);
             row1 = new List();
-            row1.wname = row.name;
-            row1.wmove = row.move;
-            row1.wposi = row.posi;
-            row1.w1 = row.pastpos1 + '\n' + row.pastcnt1;
-            row1.w2 = row.pastpos2 + '\n' + row.pastcnt2;
-            row1.w3 = row.pastpos3 + '\n' + row.pastcnt3;
-            row1.w4 = row.pastpos4 + '\n' + row.pastcnt4;
-            row1.w5 = row.pastpos5 + '\n' + row.pastcnt5;
-            row1.w6 = row.pastpos6 + '\n' + row.pastcnt6;
-          } else {
             row1.ename = row.name;
             row1.emove = row.move;
             row1.eposi = row.posi;
@@ -235,6 +225,16 @@ export class QueryService {
             row1.e4 = row.pastpos4 + '\n' + row.pastcnt4;
             row1.e5 = row.pastpos5 + '\n' + row.pastcnt5;
             row1.e6 = row.pastpos6 + '\n' + row.pastcnt6;
+          } else {
+            row1.wname = row.name;
+            row1.wmove = row.move;
+            row1.wposi = row.posi;
+            row1.w1 = row.pastpos1 + '\n' + row.pastcnt1;
+            row1.w2 = row.pastpos2 + '\n' + row.pastcnt2;
+            row1.w3 = row.pastpos3 + '\n' + row.pastcnt3;
+            row1.w4 = row.pastpos4 + '\n' + row.pastcnt4;
+            row1.w5 = row.pastpos5 + '\n' + row.pastcnt5;
+            row1.w6 = row.pastpos6 + '\n' + row.pastcnt6;
           }
         }
         this.list.push(row1);
@@ -325,5 +325,45 @@ export class QueryService {
     }
     return flg;
   }
+
+  convKana(value): string {
+    const kanaMap = {
+      "ｱ": "ア", "ｲ": "イ", "ｳ": "ウ", "ｴ": "エ", "ｵ": "オ",
+      "ｶ": "カ", "ｷ": "キ", "ｸ": "ク", "ｹ": "ケ", "ｺ": "コ",
+      "ｻ": "サ", "ｼ": "シ", "ｽ": "ス", "ｾ": "セ", "ｿ": "ソ",
+      "ﾀ": "タ", "ﾁ": "チ", "ﾂ": "ツ", "ﾃ": "テ", "ﾄ": "ト",
+      "ﾅ": "ナ", "ﾆ": "ニ", "ﾇ": "ヌ", "ﾈ": "ネ", "ﾉ": "ノ",
+      "ﾊ": "ハ", "ﾋ": "ヒ", "ﾌ": "フ", "ﾍ": "ヘ", "ﾎ": "ホ",
+      "ﾏ": "マ", "ﾐ": "ミ", "ﾑ": "ム", "ﾒ": "メ", "ﾓ": "モ",
+      "ﾔ": "ヤ", "ﾕ": "ユ", "ﾖ": "ヨ",
+      "ﾗ": "ラ", "ﾘ": "リ", "ﾙ": "ル", "ﾚ": "レ", "ﾛ": "ロ",
+      "ﾜ": "ワ", "ｦ": "ヲ", "ﾝ": "ン",
+
+      "ｧ": "ア", "ｨ": "イ", "ｩ": "ウ", "ｪ": "エ", "ｫ": "オ",
+      "ｯ": "ツ", "ｬ": "ヤ", "ｭ": "ユ", "ｮ": "ヨ", "ｰ": "ー",
+
+      "ｶﾞ": "カ", "ｷﾞ": "キ", "ｸﾞ": "ク", "ｹﾞ": "ケ", "ｺﾞ": "コ",
+      "ｻﾞ": "サ", "ｼﾞ": "シ", "ｽﾞ": "ス", "ｾﾞ": "セ", "ｿﾞ": "ソ",
+      "ﾀﾞ": "タ", "ﾁﾞ": "チ", "ﾂﾞ": "ツ", "ﾃﾞ": "テ", "ﾄﾞ": "ト",
+      "ﾊﾞ": "ハ", "ﾋﾞ": "ヒ", "ﾌﾞ": "フ", "ﾍﾞ": "ヘ", "ﾎﾞ": "ホ",
+      "ﾊﾟ": "ハ", "ﾋﾟ": "ヒ", "ﾌﾟ": "フ", "ﾍﾟ": "ヘ", "ﾎﾟ": "ホ",
+
+      "ガ": "カ", "ギ": "キ", "グ": "ク", "ゲ": "ケ", "ゴ": "コ",
+      "ザ": "サ", "ジ": "シ", "ズ": "ス", "ゼ": "セ", "ゾ": "ソ",
+      "ダ": "タ", "ヂ": "チ", "ヅ": "ツ", "デ": "テ", "ド": "ト",
+      "バ": "ハ", "ビ": "ヒ", "ブ": "フ", "ベ": "ヘ", "ボ": "ホ",
+      "パ": "ハ", "ピ": "ヒ", "プ": "フ", "ペ": "ヘ", "ポ": "ホ",
+      "ァ": "ア", "ィ": "イ", "ゥ": "ウ", "ェ": "エ", "ォ": "オ",
+      "ッ": "ツ", "ャ": "ヤ", "ュ": "ユ", "ョ": "ヨ",
+    }
+    // 半角カナ、数字のみに変換
+    let reg = new RegExp('(' + Object.keys(kanaMap).join('|') + ')', 'g');
+    let val = value.replace(/[^ｦ-ﾝア-ンー]/g, '').replace(reg, function (match) {
+      return kanaMap[match];
+    });
+    return val;
+  }
+
+
 
 }

@@ -10,10 +10,12 @@ import { GraphQLModule } from './graphql.module';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
+import { WakuPipe } from './waku.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WakuPipe
   ],
   imports: [
     BrowserModule,
@@ -26,8 +28,9 @@ import { AppComponent } from './app.component';
     MaterialModule,
     ToastrModule.forRoot({
       timeOut: 2500,
-      positionClass: 'toast-top-right',
-      preventDuplicates: false
+      positionClass: 'toast-center-center',
+      preventDuplicates: false,
+      closeButton: true
     }),
     HttpClientModule
   ],

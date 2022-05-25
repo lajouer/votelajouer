@@ -21,33 +21,38 @@
           </mat-form-field>
           <mat-form-field appearance="outline" style="width: 8em;">
             <mat-label>シコ名</mat-label>
-            <input matInput formControlName="name" maxlength="5" required />
+            <input matInput formControlName="name" (keyup.enter)="updKana($event.target.value)"
+              (change)="updKana($event.target.value)" maxlength="5" required />
           </mat-form-field>
         </div>
         <div>
-          <button mat-flat-button color="warn" (click)="setPrev()" style="margin: 10px;"
+          <button type="button" mat-flat-button color="warn" (click)="setPrev()" style="margin: 10px;"
             *ngIf="qrysrv.cur > 1">前へ</button>
           <span> {{qrysrv.cur}} 口目 ／ {{qrysrv.cnt}} 口　</span>
-          <button mat-flat-button color="accent" (click)="setNext()" style="margin: 10px;"
+          <button type="button" mat-flat-button color="accent" (click)="setNext()" style="margin: 10px;"
             *ngIf="qrysrv.cur < qrysrv.cnt" [disabled]="form.invalid">次へ<span *ngIf="!qrysrv.flg">(保存)</span></button>
-          <button mat-flat-button color="accent" (click)="qrysrv.updTran()" style="margin: 10px;"
+          <button type="button" mat-flat-button color="accent" (click)="qrysrv.updTran()" style="margin: 10px;"
             *ngIf="qrysrv.cnt > 0 && qrysrv.cur == qrysrv.cnt" [disabled]="form.invalid">保存</button>
         </div>
-        <p *ngIf="form.invalid">シコ名を入力し(5文字以内)、00(控)まで力士を選択して下さい！！</p>
+        <div>
+          <p *ngIf="form.invalid">シコ名※を入力し、00(控)まで力士を選択して下さい！！<br>
+            ※カタカナ5文字以内で入力して下さい。濁音・半濁音・拗音は使用できません。<br>
+            例「ラジュエ」と入力すると「ラシユエ」と登録されます。</p>
+        </div>
       </div>
       <table mat-table formArrayName="mtbl" [dataSource]="dataSource" aria-label="Elements" class="mat-elevation-z8">
         <ng-container matColumnDef="waku">
           <th mat-header-cell *matHeaderCellDef>持点</th>
           <td mat-cell *matCellDef="let row; let i = index" [formGroupName]="i">
-            <mat-form-field style="width: 2em;">
-              <input matInput [value]="qrysrv.frmArr.getRawValue()[i].waku" disabled>
+            <mat-form-field style="width: 2em;text-align: right;">
+              <input matInput [value]="qrysrv.frmArr.getRawValue()[i].waku | waku" disabled>
             </mat-form-field>
           </td>
         </ng-container>
         <ng-container matColumnDef="riki">
           <th mat-header-cell *matHeaderCellDef>力士選択</th>
           <td mat-cell *matCellDef="let row; let i = index" [formGroupName]="i">
-            <mat-form-field style="width: 7em;">
+            <mat-form-field style="width: 9em;">
               <mat-select formControlName="riki" required>
                 <mat-option *ngFor="let sval of makeSelVal(i)" [value]="sval.sval" [disabled]="sval.dis">
                   {{ sval.viewval }}
@@ -59,7 +64,7 @@
         <ng-container matColumnDef="riki2">
           <th mat-header-cell *matHeaderCellDef>確定内容</th>
           <td mat-cell *matCellDef="let row; let i = index" [formGroupName]="i">
-            <mat-form-field style="width: 6em;">
+            <mat-form-field style="width: 8em;">
               <mat-select [value]="qrysrv.frmArr.getRawValue()[i].riki2" disabled>
                 <mat-option *ngFor="let sval of qrysrv.riki.concat(qrysrv.yoko)" [value]="sval.sval">
                   {{ sval.viewval }}
@@ -147,72 +152,21 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </form>
+    <h5 style="margin-bottom:0px;text-indent:2em;">　　※番付の↑は前場所より地位が上がった、↓は前場所より地位が下がったことを表します。</h5>
     <table mat-table [dataSource]="dataSource2" aria-label="Elements" class="mat-elevation-z8">
-      <ng-container matColumnDef="west">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="3">東</th>
-      </ng-container>
-      <ng-container matColumnDef="whist">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="6">過去6場所の番付と勝ち数</th>
-      </ng-container>
-      <ng-container matColumnDef="wname">
-        <th mat-header-cell *matHeaderCellDef>力士</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.wname }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="wmove">
-        <th mat-header-cell *matHeaderCellDef>番付</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.wmove }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="w6">
-        <th mat-header-cell *matHeaderCellDef>6場所前</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.w6 }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="w5">
-        <th mat-header-cell *matHeaderCellDef>5場所前</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.w5 }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="w4">
-        <th mat-header-cell *matHeaderCellDef>4場所前</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.w4 }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="w3">
-        <th mat-header-cell *matHeaderCellDef>3場所前</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.w3 }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="w2">
-        <th mat-header-cell *matHeaderCellDef>2場所前</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.w2 }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="w1">
-        <th mat-header-cell *matHeaderCellDef>前場所</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.w1 }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="wposi">
-        <th mat-header-cell *matHeaderCellDef>番付</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.wposi }}
-        </td>
-      </ng-container>
       <ng-container matColumnDef="east">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="3">西</th>
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="3">東
+        </th>
       </ng-container>
       <ng-container matColumnDef="ehist">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="6">過去6場所の番付と勝ち数</th>
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="6">
+          過去6場所の番付と勝ち数</th>
+      </ng-container>
+      <ng-container matColumnDef="eposi">
+        <th mat-header-cell *matHeaderCellDef>地位</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.eposi }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="ename">
         <th mat-header-cell *matHeaderCellDef>力士</th>
@@ -262,13 +216,68 @@
           {{ row.e1 }}
         </td>
       </ng-container>
-      <ng-container matColumnDef="eposi">
-        <th mat-header-cell *matHeaderCellDef>番付</th>
+      <ng-container matColumnDef="west">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="3">西</th>
+      </ng-container>
+      <ng-container matColumnDef="whist">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="6">
+          過去6場所の番付と勝ち数</th>
+      </ng-container>
+      <ng-container matColumnDef="wposi">
+        <th mat-header-cell *matHeaderCellDef>地位</th>
         <td mat-cell *matCellDef="let row">
-          {{ row.eposi }}
+          {{ row.wposi }}
         </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="['west', 'whist','east','ehist']"></tr>
+      <ng-container matColumnDef="wname">
+        <th mat-header-cell *matHeaderCellDef>力士</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.wname }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="wmove">
+        <th mat-header-cell *matHeaderCellDef>番付</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.wmove }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="w6">
+        <th mat-header-cell *matHeaderCellDef>6場所前</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.w6 }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="w5">
+        <th mat-header-cell *matHeaderCellDef>5場所前</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.w5 }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="w4">
+        <th mat-header-cell *matHeaderCellDef>4場所前</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.w4 }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="w3">
+        <th mat-header-cell *matHeaderCellDef>3場所前</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.w3 }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="w2">
+        <th mat-header-cell *matHeaderCellDef>2場所前</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.w2 }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="w1">
+        <th mat-header-cell *matHeaderCellDef>前場所</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.w1 }}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['east','ehist','west', 'whist']"></tr>
       <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
     </table>
