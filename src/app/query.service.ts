@@ -306,7 +306,13 @@ export class QueryService {
         _set: trvote
       },
     }).subscribe(({ data }) => {
-      this.toastr.success(current + ' 口目を保存しました');
+      if (current == this.cnt) {
+        this.toastr.success(this.cnt + ' 口受付ました', '投票完了', { positionClass: 'toast-center-center', closeButton: true });
+      } else {
+        this.toastr.success(current + ' 口目を保存しました');
+      }
+
+
     }, (error) => {
       console.log('error upd trvote', error);
     });

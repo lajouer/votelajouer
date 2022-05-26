@@ -26,12 +26,7 @@ import { WakuPipe } from './waku.pipe';
     ReactiveFormsModule,
     GraphQLModule,
     MaterialModule,
-    ToastrModule.forRoot({
-      timeOut: 2500,
-      positionClass: 'toast-center-center',
-      preventDuplicates: false,
-      closeButton: true
-    }),
+    ToastrModule.forRoot(),
     HttpClientModule
   ],
   providers: [],
