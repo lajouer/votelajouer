@@ -129,7 +129,6 @@ export class QueryService {
         this.month = data.msmonth[0].month;
         this.end = new Date(data.msmonth[0].end);
         this.flg = this.checkDate(this.end);
-        // console.log(this.end > new Date(), this.end < new Date());
 
         this.cnt = data.msmonth[0].trvotes.length;
         for (let i = 0; i < this.cnt; i++) {
@@ -320,14 +319,13 @@ export class QueryService {
   }
 
   checkDate(sDate): boolean { //true⇒入力不可
-    let flg: boolean = false;
+    let flg: boolean = true;
     const nDate: Date = new Date();
-    if (nDate.getFullYear() > sDate.getFullYear()) {
-      flg = true;
-    } else if (nDate.getMonth() > sDate.getMonth()) {
-      flg = true;
-    } else if (nDate.getDate() > sDate.getDate()) {
-      flg = true;
+    let lDate: Date = new Date(sDate.getTime()) //日付の値渡し
+    lDate.setDate(lDate.getDate() + 1); //比較用に期限の翌日をセット
+    // console.log(lDate, nDate);
+    if (nDate.getTime() < lDate.getTime()) {
+      flg = false;
     }
     return flg;
   }
