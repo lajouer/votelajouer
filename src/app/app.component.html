@@ -12,14 +12,14 @@
     <form [formGroup]="form" *ngIf="qrysrv.cnt>0">
       <div fxLayout="row wrap" fxLayoutGap="5px">
         <div>
-          <mat-form-field style="width: 6em;">
+          <!-- <mat-form-field style="width: 6em;">
             <mat-label>販社コード</mat-label>
             <input matInput [value]="form.getRawValue().comp" disabled />
           </mat-form-field>
           <mat-form-field style="width: 6em;">
             <mat-label>お客様コード</mat-label>
             <input matInput [value]="form.getRawValue().cust" disabled />
-          </mat-form-field>
+          </mat-form-field> -->
           <mat-form-field appearance="outline" style="width: 8em;">
             <mat-label>シコ名</mat-label>
             <input matInput formControlName="name" (keyup.enter)="updKana($event.target.value)"
