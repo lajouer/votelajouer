@@ -304,7 +304,7 @@ export class QueryService {
         comcusid: this.frmCur.getRawValue().comp + this.frmCur.getRawValue().cust,
         _set: trvote
       },
-    }).subscribe(({ data }) => {
+    }).subscribe(({ loading }) => {
       if (current == this.cnt) {
         this.toastr.success(this.cnt + ' 口受付ました', '投票完了', { positionClass: 'toast-center-center', closeButton: true });
       } else {
