@@ -10,13 +10,13 @@ const app = express();
 // app.use(forceSsl);
 
 // // 以下の設定だけで dist/index.html も返せてはいる
-// app.use(express.static(`${__dirname}/dist`));
-app.use(express.static(`${__dirname}`));
+app.use(express.static(`${__dirname}/dist`));
+// app.use(express.static(`${__dirname}`));
 
 // // ルートへのアクセス時は念のため dist/index.html を確実に返すようにしておく
 app.get('/*', (req, res) => {
-//   res.sendFile(path.join(`${__dirname}/dist/index.html`));
-  res.sendFile(path.join(`${__dirname}/index.html`));
+  res.sendFile(path.join(`${__dirname}/dist/index.html`));
+  // res.sendFile(path.join(`${__dirname}/index.html`));
 });
 // // サーバ起動
 // const server = app.listen(process.env.PORT || 8080, () => {
