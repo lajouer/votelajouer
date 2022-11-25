@@ -16,10 +16,12 @@
       "dom",
       "esnext.asynciterable"
     ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true
   }
-}
+}  

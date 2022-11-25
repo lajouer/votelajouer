@@ -110,5 +110,8 @@
       }
     }
   },
-  "defaultProject": "lajouer"
+  "defaultProject": "lajouer",
+  "cli": {
+    "analytics": "2c5a6669-7242-45c0-9eb4-0c17e9ba2f2f"
+  }
 }
